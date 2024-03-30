@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func startRepl() {
+func startRepl(cfg *config) {
 	commands := getCommands()
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -21,6 +21,7 @@ func startRepl() {
 		}
 
 		commandHead := parsed[0]
+		commandArgs := parsed[1:]
 		command, isCommand := commands[commandHead]
 		if !isCommand {
 			fmt.Println("Wrong command!")
@@ -28,9 +29,9 @@ func startRepl() {
 			continue
 		}
 
-		err := command.fn()
+		err := command.fn(cfg, commandArgs...)
 		if err != nil {
-			fmt.Print(err)
+			fmt.Println(err)
 			continue
 		}
 	}
