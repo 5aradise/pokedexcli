@@ -15,3 +15,26 @@ func NewConfig() config {
 		locationLimit:  20,
 	}
 }
+
+func (cfg *config) setLocationOffset(offset int) {
+	locationCount := 1036
+	if offset < 0 {
+		cfg.locationOffset = 0
+		return
+	}
+	if offset >= locationCount {
+		return
+	}
+	cfg.locationOffset = offset
+}
+
+func (cfg *config) setLocationLimit(limit int) {
+	if limit < 0 {
+		cfg.locationLimit = 1
+		return
+	}
+	if limit == 0 {
+		return
+	}
+	cfg.locationLimit = limit
+}
