@@ -15,22 +15,22 @@ func getCommands() map[string]cliCommand {
 		},
 		"config": {
 			usage:       "config",
-			description: "Displays the configuration",
+			description: "Displays the default configuration",
 			fn:          cfgFn,
 		},
 		"map": {
-			usage:       "map <offset> <limit>",
-			description: "Displays the names of {limit} locations, starting from the {offset}, in the Pokemon world",
+			usage:       "map [offset] [limit]",
+			description: "Displays the names of [limit] locations, starting from the [offset] , in the Pokemon world",
 			fn:          mapFn,
 		},
 		"mapf": {
-			usage:       "mapf <step>",
-			description: "Displays the next {step} locations",
+			usage:       "mapf [step]",
+			description: "Displays the next [step] locations",
 			fn:          mapfFn,
 		},
 		"mapb": {
-			usage:       "mapb <step>",
-			description: "Displays the previous {step} locations",
+			usage:       "mapb [step]",
+			description: "Displays the previous [step] locations",
 			fn:          mapbFn,
 		},
 		"exit": {

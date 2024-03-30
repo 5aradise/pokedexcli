@@ -4,8 +4,8 @@ import "fmt"
 
 func helpFn(cfg *config, args ...string) error {
 	helpMsg := ""
-	for name, comand := range getCommands() {
-		helpMsg += fmt.Sprintf("%s: %s\n", name, comand.description)
+	for _, comand := range getCommands() {
+		helpMsg += fmt.Sprintf("%s - %s\n", comand.usage, comand.description)
 	}
 	fmt.Print(helpMsg)
 	return nil
