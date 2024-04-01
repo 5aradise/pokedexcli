@@ -58,11 +58,10 @@ func parseMapArgs(args []string) (arg1, arg2 int, err error) {
 }
 
 func printCfgLocations(cfg *config) error {
-	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.locationOffset, cfg.locationLimit)
+	locations, err := cfg.pokeapiClient.GetLocations(cfg.locationOffset, cfg.locationLimit)
 	if err != nil {
 		return err
 	}
-	locations := locationResp.Results
 	printLocations(locations)
 	return err
 }
