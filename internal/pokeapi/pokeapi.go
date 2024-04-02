@@ -1,6 +1,8 @@
 package pokeapi
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -21,4 +23,37 @@ func NewClient(cacheTTL time.Duration) Client {
 		},
 		cache: pokecache.NewCache(cacheTTL, 20),
 	}
+}
+
+func (c *Client) getResp(url string) (data []byte, err error) {
+	cacheData, isInCache := c.cache.Get(url)
+	if isInCache {
+		data = cacheData
+		return
+	}
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return
+	}
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode > 399 {
+		err = fmt.Errorf("bad status code: %v", resp.StatusCode)
+		return
+	}
+
+	data, err = io.ReadAll(resp.Body)
+	if err != nil {
+		data = nil
+		return
+	}
+
+	c.cache.Add(url, data)
+	return
 }
