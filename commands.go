@@ -33,6 +33,11 @@ func getCommands() map[string]cliCommand {
 			description: "Displays the previous [step] locations",
 			fn:          mapbFn,
 		},
+		"areas": {
+			usage:       "areas <location_name>",
+			description: "Displays areas at a <location_name> location",
+			fn:          areasFn,
+		},
 		"exit": {
 			usage:       "exit",
 			description: "Exit the Pokedex",
