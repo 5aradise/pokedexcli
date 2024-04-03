@@ -29,7 +29,7 @@ func catchFn(cfg *config, args ...string) error {
 	fmt.Println(strings.Title(pokemonName), "level:", pokemonExp)
 
 	fmt.Println("Throwing a Pokeball at", pokemonName, "...")
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * time.Duration(rand.Intn(3)+1))
 	poekmonAttack := rand.Intn(pokemonExp)
 	if cfg.playerLevel < poekmonAttack {
 		fmt.Println("You missed!")

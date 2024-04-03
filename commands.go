@@ -53,6 +53,11 @@ func getCommands() map[string]cliCommand {
 			description: "Displays information about a {pokemon_name} pokemon",
 			fn:          inspectFn,
 		},
+		"pokedex": {
+			usage:       "pokedex",
+			description: "Displays your pokemons",
+			fn:          pokedexFn,
+		},
 		"exit": {
 			usage:       "exit",
 			description: "Exit the Pokedex",
