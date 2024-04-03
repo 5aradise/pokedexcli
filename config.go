@@ -8,6 +8,8 @@ import (
 
 type config struct {
 	pokeapiClient  pokeapi.Client
+	playerLevel    int
+	pokedex        map[string]pokeapi.PokemonResp
 	locationOffset int
 	locationLimit  int
 }
@@ -15,6 +17,8 @@ type config struct {
 func NewConfig() config {
 	return config{
 		pokeapiClient:  pokeapi.NewClient(time.Hour),
+		playerLevel:    10,
+		pokedex:        make(map[string]pokeapi.PokemonResp),
 		locationOffset: 0,
 		locationLimit:  20,
 	}

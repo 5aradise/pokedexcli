@@ -34,14 +34,19 @@ func getCommands() map[string]cliCommand {
 			fn:          mapbFn,
 		},
 		"areas": {
-			usage:       "areas <location_name>",
-			description: "Displays areas in a <location_name> location",
+			usage:       "areas {location_name}",
+			description: "Displays areas in a {location_name} location",
 			fn:          areasFn,
 		},
 		"explore": {
-			usage:       "explore <area_name>",
-			description: "Displays pokemons in a <area_name> area",
+			usage:       "explore {area_name}",
+			description: "Displays pokemons in a {area_name} area",
 			fn:          exploreFn,
+		},
+		"catch": {
+			usage:       "catch {pokemon_name}",
+			description: "Trys to catches a {pokemon_name} pokemon",
+			fn:          catchFn,
 		},
 		"exit": {
 			usage:       "exit",
