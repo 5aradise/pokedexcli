@@ -25,7 +25,7 @@ func (c *Client) GetLocations(firstLoc, limit int) ([]struct {
 	listLocations := make([]struct {
 		Name string "json:\"name\""
 		URL  string "json:\"url\""
-	}, 0)
+	}, 0, limit)
 	lastLoc := firstLoc + limit - 1
 	startInChunk := firstLoc % locationChunkSize
 	endInChunk := lastLoc % locationChunkSize

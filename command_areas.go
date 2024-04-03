@@ -19,7 +19,7 @@ func areasFn(cfg *config, args ...string) error {
 		areasMsg += fmt.Sprintf("- %s\n", area.Name)
 	}
 	areasMsg += fmt.Sprintf("- %s", areas[len(areas)-1].Name)
-	fmt.Println("Areas:")
+	fmt.Println("Areas in", locationName, ":")
 	fmt.Println(areasMsg)
 	return nil
 }

@@ -20,7 +20,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			usage:       "map [offset] [limit]",
-			description: "Displays the names of [limit] locations, starting from the [offset] , in the Pokemon world",
+			description: "Displays the names of [limit] locations, starting from the [offset], in the Pokemon world",
 			fn:          mapFn,
 		},
 		"mapf": {
@@ -35,8 +35,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"areas": {
 			usage:       "areas <location_name>",
-			description: "Displays areas at a <location_name> location",
+			description: "Displays areas in a <location_name> location",
 			fn:          areasFn,
+		},
+		"explore": {
+			usage:       "explore <area_name>",
+			description: "Displays pokemons in a <area_name> area",
+			fn:          exploreFn,
 		},
 		"exit": {
 			usage:       "exit",

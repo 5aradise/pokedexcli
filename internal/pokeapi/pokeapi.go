@@ -32,12 +32,7 @@ func (c *Client) getResp(url string) (data []byte, err error) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return
-	}
-
-	resp, err := c.httpClient.Do(req)
+	resp, err := c.httpClient.Get(url)
 	if err != nil {
 		return
 	}
