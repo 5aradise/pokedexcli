@@ -3,8 +3,6 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 )
 
 type LocationResp struct {
@@ -45,50 +43,24 @@ func (c *Client) GetAreas(location string) ([]struct {
 	return locationResp.Areas, nil
 }
 
-func (c *Client) getLocationResp(location string) (LocationResp, error) {
-	locationResp := LocationResp{}
-
+func (c *Client) getLocationResp(location string) (resp LocationResp, err error) {
 	endpoint := "/" + location
 	locURL := baseURL + locationURL + endpoint
 
-	cacheData, isInCache := c.cache.Get(locURL)
-	if isInCache {
-		err := json.Unmarshal(cacheData, &locationResp)
-		if err != nil {
-			return LocationResp{}, err
+	data, err := c.getResp(locURL)
+	if err != nil {
+		if err.Error() == "bad status code: 404" {
+			err = fmt.Errorf("wrong location name")
+			return
 		}
-		return locationResp, nil
+		return
 	}
 
-	req, err := http.NewRequest("GET", locURL, nil)
+	err = json.Unmarshal(data, &resp)
 	if err != nil {
-		return LocationResp{}, err
+		resp = LocationResp{}
+		return
 	}
 
-	resp, err := c.httpClient.Do(req)
-	if err != nil {
-		return LocationResp{}, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode == 404 {
-		return LocationResp{}, fmt.Errorf("wrong location name")
-	}
-
-	if resp.StatusCode > 399 {
-		return LocationResp{}, fmt.Errorf("bad status code: %v", resp.StatusCode)
-	}
-
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return LocationResp{}, err
-	}
-
-	err = json.Unmarshal(data, &locationResp)
-	if err != nil {
-		return LocationResp{}, err
-	}
-
-	c.cache.Add(locURL, data)
-	return locationResp, nil
+	return
 }
