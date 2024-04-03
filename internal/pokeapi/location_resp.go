@@ -3,8 +3,6 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 )
 
 const locationURL string = "/location"
@@ -57,46 +55,20 @@ func (c *Client) GetLocations(firstLoc, limit int) ([]struct {
 	return listLocations, nil
 }
 
-func (c *Client) getLocationsChunkResp(chunkNum int) (LocationsResp, error) {
-	locationsResp := LocationsResp{}
-
+func (c *Client) getLocationsChunkResp(chunkNum int) (resp LocationsResp, err error) {
 	endpoint := fmt.Sprintf("?offset=%v&limit=%v", chunkNum*locationChunkSize, locationChunkSize)
 	locsURL := baseURL + locationURL + endpoint
 
-	cacheData, isInCache := c.cache.Get(locsURL)
-	if isInCache {
-		err := json.Unmarshal(cacheData, &locationsResp)
-		if err != nil {
-			return LocationsResp{}, err
-		}
-		return locationsResp, nil
-	}
-
-	req, err := http.NewRequest("GET", locsURL, nil)
+	data, err := c.getResp(locsURL)
 	if err != nil {
-		return LocationsResp{}, err
+		return
 	}
 
-	resp, err := c.httpClient.Do(req)
+	err = json.Unmarshal(data, &resp)
 	if err != nil {
-		return LocationsResp{}, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode > 399 {
-		return LocationsResp{}, fmt.Errorf("bad status code: %v", resp.StatusCode)
+		resp = LocationsResp{}
+		return
 	}
 
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return LocationsResp{}, err
-	}
-
-	err = json.Unmarshal(data, &locationsResp)
-	if err != nil {
-		return LocationsResp{}, err
-	}
-
-	c.cache.Add(locsURL, data)
-	return locationsResp, nil
+	return
 }
