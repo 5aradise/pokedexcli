@@ -48,6 +48,11 @@ func getCommands() map[string]cliCommand {
 			description: "Trys to catches a {pokemon_name} pokemon",
 			fn:          catchFn,
 		},
+		"inspect": {
+			usage:       "inspect {pokemon_name}",
+			description: "Displays information about a {pokemon_name} pokemon",
+			fn:          inspectFn,
+		},
 		"exit": {
 			usage:       "exit",
 			description: "Exit the Pokedex",
