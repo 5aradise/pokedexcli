@@ -8,16 +8,6 @@ import (
 const locationURL string = "/location"
 const locationChunkSize = 20
 
-type LocationsResp struct {
-	Count    int     `json:"count"`
-	Next     *string `json:"next"`
-	Previous *string `json:"previous"`
-	Results  []struct {
-		Name string `json:"name"`
-		URL  string `json:"url"`
-	} `json:"results"`
-}
-
 func (c *Client) GetLocations(firstLoc, limit int) ([]struct {
 	Name string "json:\"name\""
 	URL  string "json:\"url\""

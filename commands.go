@@ -15,7 +15,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"config": {
 			usage:       "config",
-			description: "Displays the default configuration",
+			description: "Displays current player configuration",
 			fn:          cfgFn,
 		},
 		"map": {
